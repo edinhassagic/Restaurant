@@ -1,8 +1,12 @@
 .mainbox {
-    width: 100%;
-    height: 95vh;
+    width: 60%;
+ 
+margin-left: auto;
+margin-right: auto;
+    height: 90vh;
     border: 1px solid black;
     position: relative;
+    background-color: wheat;
     
 }
 
