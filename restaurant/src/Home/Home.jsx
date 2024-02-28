@@ -5,7 +5,7 @@ import Table from '../components/Table'
 import styles from "./Home.module.css"
 const Home = () => {
   return (
-    <div className={styles.home}>
+    <div >
         <Group/>
         <Room/>
         <Table/>
