@@ -2,7 +2,9 @@ import React from "react";
 import styles from "./Room.module.css";
 import Draggable from "react-draggable";
 
-function Room() {
+const Room = ()=> {
+
+
   return (
     <div>
       <div className={styles.mainbox}>
@@ -11,6 +13,8 @@ function Room() {
         </Draggable>
       </div>
     </div>
+
+
   );
 }
 
