@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from "./Group.module.css"
 import InputGroup from './Modal/InputGroup'
-import {useState} from 
+import { useState } from 'react';
 import { groupData } from '../Data/GroupPeopleData';
 
 const Group = () => {
@@ -19,18 +19,19 @@ const Group = () => {
   };
   return (
     <div className={styles.group}>
+      <h3>Grupe ljudi</h3>
       <div className={styles.groupList}>
-        {groups.map((group, index) => (
+        {groupData.map((group, index) => (
           <div className={styles.groupItem} key={index}>
-            <p>Group Name: {group.groupName}</p>
-            <p>Number of People: {group.groupSize}</p>
+            <p>Ime grupe: {group.groupName}</p>
+            <p>Kapacitet grupe: {group.groupSize}</p>
           </div>
         ))}
       </div>
       <button className={styles.addButton} onClick={() => setShowModal(true)}>
-        Add Group
+        Dodaj Grupu
       </button>
-      {showModal && <InputGroup onSave={onSave} />}
+      {showModal && <InputGroup onSave={onSave} setShowModal={setShowModal} />}
     </div>
   )
 }
