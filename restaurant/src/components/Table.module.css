@@ -91,14 +91,11 @@
   padding: 10px 25px;
   border: 1px solid black;
   border-radius: 10px;
-<<<<<<< HEAD
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-=======
   
->>>>>>> dca59b00400c49f792cd5a6a159c001242553708
 }
 
 .modal_input {
