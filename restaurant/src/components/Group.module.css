@@ -42,3 +42,24 @@
   border-radius: 10px;
   padding: 10px;
 }
+.selectedGroupItem {
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  background-color: #ffcccc;
+}
+
+.draggableItem {
+  background-color: #66ccff;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  cursor: move;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  position: absolute;
+  z-index: 5;
+}
