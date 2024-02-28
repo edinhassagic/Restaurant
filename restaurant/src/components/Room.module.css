@@ -1,8 +1,6 @@
 .mainbox {
-    width: 60%;
- 
-margin-left: auto;
-margin-right: auto;
+    width: 900px;
+
     height: 100vh;
     
     border: 1px solid black;
@@ -18,13 +16,5 @@ height: 100px;
 background: red;
 position: absolute;
 }
-.room{
 
-    width: 1000px;
-    height: 500px;
-    position: relative;
-    overflow: hidden;
-    border: 1px solid black;
-
-}
 
