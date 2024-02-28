@@ -1,0 +1,9 @@
+.room{
+
+    width: 1000px;
+    height: 500px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid black;
+
+}

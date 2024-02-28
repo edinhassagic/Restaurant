@@ -1,11 +1,11 @@
 import React from 'react'
-import styles from "./Room.module.css";
+import styles from "./Group.module.css";
+
+const Room = ()=> {
 
 
-function Room() {
   return (
-    <div>
-      
+    <div className={styles.room}>
     </div>
   )
 }
