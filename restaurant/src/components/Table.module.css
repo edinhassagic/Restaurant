@@ -1,0 +1,101 @@
+.container {
+  background-color: #fae588;
+  width: fit-content;
+  height: 100%;
+  padding: 10px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.action_container {
+  padding: 10px 0;
+}
+
+.table_details {
+  background-color: white;
+  border-radius: 10px;
+  padding: 10px 20px;
+  margin-bottom: 10px;
+}
+
+.table_details_title {
+  font-weight: bold;
+}
+
+.add_table_btn {
+  background-color: white;
+  font-weight: bold;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 10px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.add_table_btn:hover {
+  background-color: rgb(215, 213, 213);
+}
+
+.add_modal_btn {
+  background-color: #7fb446;
+  font-weight: bold;
+  border: none;
+  padding: 5px 14px;
+  border-radius: 10px;
+  font-size: 17px;
+  cursor: pointer;
+  color: white;
+}
+
+.add_modal_btn:hover {
+  background-color: #69933c;
+}
+
+.cancel_modal_btn {
+  background-color: red;
+  font-weight: bold;
+  border: none;
+  padding: 7px 14px;
+  border-radius: 10px;
+  font-size: 15px;
+  cursor: pointer;
+  color: white;
+}
+
+.cancel_modal_btn:hover {
+  background-color: rgb(218, 3, 3);
+}
+
+.table_modal_input_container {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 7px;
+}
+
+.input_title {
+  font-weight: bold;
+  padding: 3px 0;
+}
+
+.modal_action_container {
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal {
+  width: fit-content;
+  background-color: white;
+  padding: 10px 25px;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+.modal_input {
+  font-size: 15px;
+  padding: 8px;
+  border-radius: 10px;
+  border: 1px solid gray;
+}
