@@ -6,71 +6,58 @@ import InputGroup from "./Modal/InputGroup";
 import { useState } from "react";
 import { groupData } from "../Data/GroupPeopleData";
 
-const Group = () => {
+const Group = ({handleDragStart }) => {
   const [showModal, setShowModal] = useState(false);
 
   const [groups, setGroups] = useState(
     groupData.map((group) => ({ ...group, draggableItem: null }))
   );
 
-
   const onSave = ({ groupName, groupSize }) => {
     const newGroup = {
       groupName: groupName,
       groupSize: parseInt(groupSize),
     };
-    setGroups([...groups, {...newGroup, draggableItem: null }]);
+    setGroups([...groups, { ...newGroup, draggableItem: null }]);
     console.log("Group data:", groups);
-    setShowModal(false);
+groupData.push({...newGroup, draggableItem: null })  
+  setShowModal(false);
   };
 
-  const handleGroupItemClick = (index) => {
-    const updatedGroups = [...groups];
-    updatedGroups[index].draggableItem = (
-      <Draggable defaultPosition={{ x: 0, y: 0 }} key={index}>
-        <div
-          className={styles.draggableItem}
-          style={{
-            width: `${Math.ceil(groups[index].groupSize / 2) * 25}px`,
-            height: "50px",
-            position: "absolute",
-          }}
-        >
-          Draggable Div
-        </div>
-      </Draggable>
-    );
-    setGroups(updatedGroups);
-  };
+  /*  const handleDragStart = (index) => (event) => {
+    event.dataTransfer.setData("text/plain", index.toString());
+  };*/
 
   return (
     <>
-   
-    <div className={styles.group}>
-    <div className={styles.wrap}>
-      <h3>Grupe ljudi</h3>
-      <div className={styles.groupList}>
-        {groups.map((group, index) => (
-          <div key={index}>
-            <div
-              className={styles.groupItem}
-              onClick={() => handleGroupItemClick(index)}
-            >
-              <p>Group Name: {group.groupName}</p>
-              <p>Number of People: {group.groupSize}</p>
-            </div>
-            {group.draggableItem}
+      <div className={styles.group}>
+        <div className={styles.wrap}>
+          <h3>Grupe ljudi</h3>
+          <div className={styles.groupList}>
+            {groups.map((group, groupName) => (
+              <div
+                key={groupName} className={styles.groupItem}
+                onDragStart={(e) => handleDragStart(e, group.groupName)}
+                draggable
+              >
+                  <p>Group Name: {group.groupName}</p>
+                  <p>Number of People: {group.groupSize}</p>
+              </div>
+            ))}
           </div>
-        ))}
+          <button
+            className={styles.addButton}
+            onClick={() => setShowModal(true)}
+          >
+            Dodaj Grupu
+          </button>
+          {showModal && (
+            <InputGroup onSave={onSave} setShowModal={setShowModal} />
+          )}
+        </div>
       </div>
-      <button className={styles.addButton} onClick={() => setShowModal(true)}>
-        Dodaj Grupu
-      </button>
-      {showModal && <InputGroup onSave={onSave} setShowModal={setShowModal} />}
-    </div>
-    </div>
-
-</>  );
+    </>
+  );
 };
 
 export default Group;
