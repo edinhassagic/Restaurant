@@ -1,11 +1,7 @@
-import React from 'react'
+import React from "react";
 
 function InputTable() {
-  return (
-    <div>
-      
-    </div>
-  )
+  return <div></div>;
 }
 
-export default InputTable
+export default InputTable;
