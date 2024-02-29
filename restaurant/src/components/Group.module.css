@@ -18,6 +18,14 @@
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
+.tableItem {
+  background-color: #20d35c;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  
+}
+
 .addButton {
   margin-top: 20px;
   padding: 10px 20px;

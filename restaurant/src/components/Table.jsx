@@ -134,7 +134,6 @@ const Table = ({
                 <label className={styles.table_details_title}>Capacity: </label>{" "}
                 {table.capacity}
               </p>
-             
             </div>
           ))}
         </div>
