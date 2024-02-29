@@ -1,17 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Table.module.css";
 import Modal from "react-modal";
-import Draggable from "react-draggable";
 import { TableData } from "../Data/TablesData";
-
 Modal.setAppElement("#root");
 
-const Table = () => {
+const Table = ({
+  handleDragStart,
+  droppedElementGroup,
+  handleDrop,
+  handleDragOver,
+}) => {
   const [tables, setTables] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [tableName, setTableName] = useState("");
   const [orientation, setOrientation] = useState("vertikalno");
   const [capacity, setCapacity] = useState(1);
+
+  useEffect(() => {
+    console.log(droppedElementGroup);
+  }, [droppedElementGroup]);
+
+  useEffect(() => {
+    console.log(droppedElementGroup);
+  }, []);
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -21,24 +32,20 @@ const Table = () => {
     setModalIsOpen(false);
   };
 
-  const addTable =async () => {
+  const addTable = async () => {
     const newTable = {
       name: tableName,
       orientation: parseInt(capacity),
       capacity: capacity,
     };
-    TableData.push({...newTable, draggableItem : null})
-    const setT = async() =>  setTables([...tables, { ...newTable, draggableItem: null }]);
+
+    const setT = async () =>
+      setTables([...tables, { ...newTable, draggableItem: null }]);
     await setT();
-
-    
-    
+    console.log(newTable);
+    TableData.push({ ...newTable });
     closeModal();
-    console.log(tables)
-  };
-
-  const handleTableItemClick = (index) => {
-    
+    console.log(TableData);
   };
 
   return (
@@ -105,11 +112,11 @@ const Table = () => {
 
         <div className={styles.tables_container}>
           {tables.map((table, index) => (
-            
             <div
               key={index}
               className={styles.table_details}
-              onClick={() => handleTableItemClick(index)}
+              draggable
+              onDragStart={(e) => handleDragStart(e, table.name, "table")}
             >
               <p>
                 <label className={styles.table_details_title}>
@@ -127,7 +134,7 @@ const Table = () => {
                 <label className={styles.table_details_title}>Capacity: </label>{" "}
                 {table.capacity}
               </p>
-              {table.draggableItem}
+             
             </div>
           ))}
         </div>
