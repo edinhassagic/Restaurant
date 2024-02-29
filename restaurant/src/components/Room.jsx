@@ -25,20 +25,62 @@ const Room = ({
         {droppedElementTable &&
           droppedElementTable.map((element, index) => (
             <div
-              key={index}
-              className={stylesGroup.groupItem}
-              onDragOver={handleDragOver}
-              onDrop={handleDropTable}
+              className={styles.TableWrapper}
+              style={{
+                width:
+                  element.orientation === "vertikalno"
+                    ? `${Math.ceil(element.capacity / 2) * 50}px`
+                    : "60px",
+                height:
+                  element.orientation === "vertikalno"
+                    ? "60px"
+                    : `${Math.ceil(element.capacity / 2) * 50}px`,
+              }}
             >
               <p>Table Name: {element.name}</p>
-              <p>Capacity: {element.capacity}</p>
-              {droppedElementGroup &&
-                droppedElementGroup.map((element, index) => (
-                  <div key={index} className={stylesGroup.groupItem}>
-                    <p>Group Name: {element.groupName}</p>
-                    <p>Number of People: {element.groupSize}</p>
-                  </div>
-                ))}
+
+              <div
+                key={index}
+                className={stylesGroup.draggedGroupItem}
+                style={{
+                  width:
+                    element.orientation === "vertikalno"
+                      ? `${Math.ceil(element.capacity / 2) * 50}px`
+                      : "60px",
+                  height:
+                    element.orientation === "vertikalno"
+                      ? "60px"
+                      : `${Math.ceil(element.capacity / 2) * 50}px`,
+                      flexDirection:
+                      element.orientation === "vertikalno"
+                        ? "row"
+                        : "column",
+                  border: "0.5px solid black",
+                }}
+                onDragOver={handleDragOver}
+                onDrop={handleDropTable}
+              >
+                {droppedElementGroup &&
+                  droppedElementGroup.map((element, index) => (
+                    <div
+                      key={index}
+                      className={stylesGroup.draggedGroupItem}
+                      style={{
+                        width:
+                          element.orientation === "vertikalno"
+                            ? `${Math.ceil(element.groupSize / 2) * 50}px`
+                            : "60px",
+                        height:
+                          element.orientation === "vertikalno"
+                            ? "60px"
+                            : `${Math.ceil(element.groupSize / 2) * 50}px`,
+                       
+                      }}
+                    >
+                      <p>Group:{element.groupName}</p>
+                    </div>
+                  ))}
+              </div>
             </div>
           ))}
       </div>
