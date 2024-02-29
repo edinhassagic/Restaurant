@@ -35,7 +35,7 @@ const Table = ({
   const addTable = async () => {
     const newTable = {
       name: tableName,
-      orientation: parseInt(capacity),
+      orientation: orientation,
       capacity: capacity,
     };
 

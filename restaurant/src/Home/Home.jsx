@@ -9,6 +9,9 @@ import { TableData } from '../Data/TablesData'
 const Home = () => {
 
 
+
+
+
   const [droppedElementGroup, setDroppedElementGroup] = useState([]);
   const [droppedElementTable, setDroppedElementTable] = useState([]);
 
@@ -44,11 +47,18 @@ const handleTableDropTable = (event) => {
   event.preventDefault();
   const groupName = event.dataTransfer.getData("groupName");
   const droppedGroup = groupData.find((group) => group.groupName === groupName);
-  if (droppedGroup) {
+  
+  if (!droppedGroup) return; 
+
+  const tableWidth = event.target.offsetWidth; 
+
+  const groupWidth = Math.ceil(droppedGroup.groupSize / 2) * 25;
+
+  if (groupWidth <= tableWidth) {
     setDroppedElementGroup([...droppedElementGroup, droppedGroup]);
+  } else {
+    console.log("Grupa je preširoka za stol!");
   }
-  console.log("pozvao sam handle drop table")
-  console.log(droppedElementGroup)
 };
 
 
