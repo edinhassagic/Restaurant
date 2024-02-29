@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import styles from "./Table.module.css";
 import Modal from "react-modal";
-
 import { TableData } from "../Data/TablesData";
-
 Modal.setAppElement("#root");
 
-const Table = ({ handleDragStart }) => {
+const Table = ({handleDragStart}) => {
   const [tables, setTables] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [tableName, setTableName] = useState("");
@@ -29,16 +27,14 @@ const Table = ({ handleDragStart }) => {
       orientation: parseInt(capacity),
       capacity: capacity,
     };
-    TableData.push({ ...newTable, draggableItem: null });
-    const setT = async () =>
-      setTables([...tables, { ...newTable, draggableItem: null }]);
+
+    const setT = async() =>  setTables([...tables, { ...newTable, draggableItem: null }]);
     await setT();
-
+    console.log(newTable)
+    TableData.push({...newTable})
     closeModal();
-    console.log(tables);
+    console.log(TableData)
   };
-
-  const handleTableItemClick = (index) => {};
 
   return (
     <>
@@ -107,7 +103,8 @@ const Table = ({ handleDragStart }) => {
             <div
               key={index}
               className={styles.table_details}
-              onClick={() => handleTableItemClick(index)}
+              draggable
+              onClick={(e) => handleDragStart(e, table.name, "table")}
             >
               <p>
                 <label className={styles.table_details_title}>

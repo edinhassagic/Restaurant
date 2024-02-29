@@ -32,9 +32,8 @@ const Group = ({ handleDragStart }) => {
           <div className={styles.groupList}>
             {groups.map((group, groupName) => (
               <div
-                key={groupName}
-                className={styles.groupItem}
-                onDragStart={(e) => handleDragStart(e, group.groupName)}
+                key={groupName} className={styles.groupItem}
+                onDragStart={(e) => handleDragStart(e, group.groupName, "group")}
                 draggable
               >
                 <p>Group Name: {group.groupName}</p>

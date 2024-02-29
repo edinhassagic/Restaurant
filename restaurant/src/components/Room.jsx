@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Room.module.css";
 import stylesGroup from "./Group.module.css";
 import { groupData } from "../Data/GroupPeopleData";
@@ -7,10 +7,13 @@ const Room = ({
   handleDragOver,
   handleDragStart,
   handleDrop,
-  droppedElement,
+  droppedElementGroup,
+  droppedElementTable,
 }) => {
-  console.log(droppedElement);
-
+  useEffect(() => {
+    console.log(droppedElementGroup);
+    console.log(droppedElementTable);
+  }, [droppedElementGroup, droppedElementTable]);
   return (
     <div
       className={styles.room}
@@ -18,12 +21,22 @@ const Room = ({
       onDrop={handleDrop}
     >
       <div className={styles.mainbox}>
-        {droppedElement.map((element, index) => (
-          <div key={index} className={stylesGroup.groupItem}>
-            <p>Group Name: {element.groupName}</p>
-            <p>Number of People: {element.groupSize}</p>
-          </div>
-        ))}
+        {droppedElementGroup &&
+          droppedElementGroup.map((element, index) => (
+            <div key={index} className={stylesGroup.groupItem}>
+              <p>Group Name: {element.groupName}</p>
+              <p>Number of People: {element.groupSize}</p>
+            </div>
+          ))}
+      </div>
+      <div className={styles.mainbox}>
+        {droppedElementTable &&
+          droppedElementTable.map((element, index) => (
+            <div key={index} className={stylesGroup.groupItem}>
+              <p>Table Name: {element.name}</p>
+              <p>Number of People: {element.capacity}</p>
+            </div>
+          ))}
       </div>
     </div>
   );
