@@ -121,7 +121,6 @@ const Table = ({handleDragStart}) => {
                 <label className={styles.table_details_title}>Capacity: </label>{" "}
                 {table.capacity}
               </p>
-              {table.draggableItem}
             </div>
           ))}
         </div>

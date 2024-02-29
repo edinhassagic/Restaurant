@@ -19,17 +19,17 @@ const handleDragOver = (e) => {
 }
 
 const handleDragStart = (e, groupName, type) => {
-
-  if(type === "group"){
-  e.dataTransfer.setData("groupName", groupName);}
-  else{
-    e.dataTransfer.setData("tableName", groupName)
+  if (type == "group") {
+    e.dataTransfer.setData("groupName", groupName);
+  } else if (type == "table") {
+    console.log(1)
+    e.dataTransfer.setData("tableName", groupName);
   }
 };
 
 
 const handleDrop = (e) => {
- console.log(groupData)
+ console.log(TableData)
   e.preventDefault();
     const groupName = e.dataTransfer.getData("groupName");
     const tableName = e.dataTransfer.getData("tableName")
