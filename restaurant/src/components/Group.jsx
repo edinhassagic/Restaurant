@@ -6,7 +6,7 @@ import InputGroup from "./Modal/InputGroup";
 import { useState } from "react";
 import { groupData } from "../Data/GroupPeopleData";
 
-const Group = ({ handleDragStart }) => {
+const Group = ({handleDragStart }) => {
   const [showModal, setShowModal] = useState(false);
 
   const [groups, setGroups] = useState(
@@ -20,9 +20,10 @@ const Group = ({ handleDragStart }) => {
     };
     setGroups([...groups, { ...newGroup, draggableItem: null }]);
     console.log("Group data:", groups);
-    groupData.push({ ...newGroup, draggableItem: null });
-    setShowModal(false);
+groupData.push({...newGroup, draggableItem: null })  
+  setShowModal(false);
   };
+
 
   return (
     <>
@@ -32,15 +33,12 @@ const Group = ({ handleDragStart }) => {
           <div className={styles.groupList}>
             {groups.map((group, groupName) => (
               <div
-                key={groupName}
-                className={styles.groupItem}
-                onDragStart={(e) =>
-                  handleDragStart(e, group.groupName, "group")
-                }
+                key={groupName} className={styles.groupItem}
+                onDragStart={(e) => handleDragStart(e, group.groupName)}
                 draggable
               >
-                <p>Group Name: {group.groupName}</p>
-                <p>Number of People: {group.groupSize}</p>
+                  <p>Group Name: {group.groupName}</p>
+                  <p>Number of People: {group.groupSize}</p>
               </div>
             ))}
           </div>
