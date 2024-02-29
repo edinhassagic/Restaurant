@@ -103,7 +103,7 @@ const Table = ({handleDragStart}) => {
               key={index}
               className={styles.table_details}
               draggable
-              onClick={(e) => handleDragStart(e, table.name, "table")}
+              onDragStart={(e) => handleDragStart(e, table.name, "table")}
             >
               <p>
                 <label className={styles.table_details_title}>
