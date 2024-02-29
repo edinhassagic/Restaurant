@@ -3,8 +3,9 @@ import styles from "./Room.module.css";
 import stylesGroup from "./Group.module.css"
 import { groupData } from "../Data/GroupPeopleData" ;
 import Group from "./Group";
+
 const Room = ( {handleDragOver, handleDragStart, handleDrop, droppedElement}) => {
-  console.log(droppedElement)
+  
   const [groupPositions, setGroupPositions] = useState({})
 
   const handleDrag = ( groupName, position) => {
@@ -25,7 +26,7 @@ const Room = ( {handleDragOver, handleDragStart, handleDrop, droppedElement}) =>
             style={{
               position: "absolute",
               left: groupPositions[element.groupName]?.x,
-              top: groupPositions[element.groupName]?.y ,
+              top: groupPositions[element.groupName]?.y,
             }}
             onDragStart={(e) => {
               e.dataTransfer.setData("groupName", element.groupName);
@@ -34,6 +35,7 @@ const Room = ( {handleDragOver, handleDragStart, handleDrop, droppedElement}) =>
             onDrag={(e) => {
               handleDrag( element.groupName, { x: e.clientX, y: e.clientY });
             }}
+            
           >
             <p>Group Name: {element.groupName}</p>
             <p>Number of People: {element.groupSize}</p>
