@@ -15,7 +15,7 @@ const Home = () => {
 const [groups, setGroups] = useState([])
 const handleDragOver = (e) => {
   e.preventDefault();
-
+console.log("test drag over")
 }
 
 const handleDragStart = (e, groupName, type) => {
@@ -30,26 +30,35 @@ const handleDragStart = (e, groupName, type) => {
 
 const handleDrop = (e) => {
  console.log(TableData)
+ console.log("drop")
   e.preventDefault();
-    const groupName = e.dataTransfer.getData("groupName");
     const tableName = e.dataTransfer.getData("tableName")
-    console.log(tableName)
-    const groupIndex = groupData.findIndex(group => group.groupName === groupName);
     const tableIndex = TableData.findIndex(table => table.name === tableName )
-    if (groupIndex != -1 )setDroppedElementGroup([...droppedElementGroup, groupData[groupIndex]]);
- console.log(TableData[tableIndex])
 
     if (tableIndex != -1 )setDroppedElementTable([...droppedElementTable, TableData[tableIndex]]);
 
 };
 
 
+const handleTableDropTable = (event) => {
+  event.preventDefault();
+  const groupName = event.dataTransfer.getData("groupName");
+  const droppedGroup = groupData.find((group) => group.groupName === groupName);
+  if (droppedGroup) {
+    setDroppedElementGroup([...droppedElementGroup, droppedGroup]);
+  }
+  console.log("pozvao sam handle drop table")
+  console.log(droppedElementGroup)
+};
+
+
+
 
   return (
     <div className={styles.home} >
         <Group  handleDragStart={handleDragStart} />
-        <Room handleDragOver={handleDragOver} handleDragStart={handleDragStart} handleDrop = {handleDrop} droppedElementGroup={droppedElementGroup} droppedElementTable={droppedElementTable}/>
-        <Table handleDragStart={handleDragStart} />
+        <Room handleDragOver={handleDragOver} handleDragStart={handleDragStart} handleDrop = {handleDrop} handleDropTable={handleTableDropTable} droppedElementTable={droppedElementTable} droppedElementGroup={droppedElementGroup} />
+        <Table handleDragStart={handleDragStart} droppedElementGroup={droppedElementGroup}  handleDrop = {handleTableDropTable} handleDragOver={handleDragOver}/>
 
     </div>
   )
