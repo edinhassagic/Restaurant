@@ -28,9 +28,7 @@ const Room = ({
               <p>Number of People: {element.groupSize}</p>
             </div>
           ))}
-      </div>
-      <div className={styles.mainbox}>
-        {droppedElementTable &&
+           {droppedElementTable &&
           droppedElementTable.map((element, index) => (
             <div key={index} className={stylesGroup.groupItem}>
               <p>Table Name: {element.name}</p>
@@ -38,6 +36,7 @@ const Room = ({
             </div>
           ))}
       </div>
+
     </div>
   );
 };
