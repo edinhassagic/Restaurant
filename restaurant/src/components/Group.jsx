@@ -1,12 +1,12 @@
 import React from "react";
-import Draggable from "react-draggable";
+
 
 import styles from "./Group.module.css";
 import InputGroup from "./Modal/InputGroup";
 import { useState } from "react";
 import { groupData } from "../Data/GroupPeopleData";
 
-const Group = ({handleDragStart }) => {
+const Group = ({ handleDragStart }) => {
   const [showModal, setShowModal] = useState(false);
 
   const [groups, setGroups] = useState(
@@ -20,13 +20,9 @@ const Group = ({handleDragStart }) => {
     };
     setGroups([...groups, { ...newGroup, draggableItem: null }]);
     console.log("Group data:", groups);
-groupData.push({...newGroup, draggableItem: null })  
-  setShowModal(false);
+    groupData.push({ ...newGroup, draggableItem: null });
+    setShowModal(false);
   };
-
-  /*  const handleDragStart = (index) => (event) => {
-    event.dataTransfer.setData("text/plain", index.toString());
-  };*/
 
   return (
     <>
@@ -36,12 +32,13 @@ groupData.push({...newGroup, draggableItem: null })
           <div className={styles.groupList}>
             {groups.map((group, groupName) => (
               <div
-                key={groupName} className={styles.groupItem}
+                key={groupName}
+                className={styles.groupItem}
                 onDragStart={(e) => handleDragStart(e, group.groupName)}
                 draggable
               >
-                  <p>Group Name: {group.groupName}</p>
-                  <p>Number of People: {group.groupSize}</p>
+                <p>Group Name: {group.groupName}</p>
+                <p>Number of People: {group.groupSize}</p>
               </div>
             ))}
           </div>
