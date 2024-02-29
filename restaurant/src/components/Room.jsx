@@ -42,41 +42,40 @@ const Room = ({
                 key={index}
                 className={stylesGroup.draggedGroupItem}
                 style={{
+                  margin: "20px",
                   width:
                     element.orientation === "vertikalno"
                       ? `${Math.ceil(element.capacity / 2) * 50}px`
-                      : "60px",
+                      : "50px",
                   height:
                     element.orientation === "vertikalno"
-                      ? "60px"
+                      ? "50px"
                       : `${Math.ceil(element.capacity / 2) * 50}px`,
-                      flexDirection:
-                      element.orientation === "vertikalno"
-                        ? "row"
-                        : "column",
+                  display: "flex",
+                  flexDirection:
+                    element.orientation === "vertikalno" ? "row" : "column",
                   border: "0.5px solid black",
                 }}
                 onDragOver={handleDragOver}
                 onDrop={handleDropTable}
               >
                 {droppedElementGroup &&
-                  droppedElementGroup.map((element, index) => (
+                  droppedElementGroup.map((elementGroup, index) => (
                     <div
                       key={index}
                       className={stylesGroup.draggedGroupItem}
                       style={{
                         width:
                           element.orientation === "vertikalno"
-                            ? `${Math.ceil(element.groupSize / 2) * 50}px`
-                            : "60px",
+                            ? `${Math.ceil(elementGroup.groupSize / 2) * 50}px`
+                            : "50px",
                         height:
                           element.orientation === "vertikalno"
-                            ? "60px"
-                            : `${Math.ceil(element.groupSize / 2) * 50}px`,
-                       
+                            ? "50px"
+                            : `${Math.ceil(elementGroup.groupSize / 2) * 50}px`,
                       }}
                     >
-                      <p>Group:{element.groupName}</p>
+                      <p>Group:{elementGroup.groupName}</p>
                     </div>
                   ))}
               </div>
