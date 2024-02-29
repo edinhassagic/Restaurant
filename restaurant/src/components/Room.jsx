@@ -14,6 +14,12 @@ const Room = ({
   useEffect(() => {
     console.log(droppedElementTable, droppedElementGroup, "elements");
   }, [droppedElementTable, droppedElementGroup]);
+
+  useEffect(() => {
+    console.log( droppedElementGroup, "elements");
+  }, [ droppedElementGroup]);
+  
+
   return (
     <div
       className={styles.room}
@@ -24,6 +30,7 @@ const Room = ({
         {droppedElementTable &&
           droppedElementTable.map((element, index) => (
             <div
+              
               className={styles.TableWrapper}
               style={{
                 width:
@@ -58,6 +65,7 @@ const Room = ({
                 }}
                 onDragOver={handleDragOver}
                 onDrop={handleDropTable}
+                
               >
                 {droppedElementGroup &&
                   droppedElementGroup.map((elementGroup, index) => (

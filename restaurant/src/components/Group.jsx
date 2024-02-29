@@ -34,7 +34,7 @@ groupData.push({...newGroup, draggableItem: null })
             {groups.map((group, groupName) => (
               <div
                 key={groupName} className={styles.groupItem}
-                onDragStart={(e) => handleDragStart(e, group.groupName)}
+                onDragStart={(e) => handleDragStart(e, group.groupName, "group")}
                 draggable
               >
                   <p>Group Name: {group.groupName}</p>

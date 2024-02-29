@@ -56,6 +56,7 @@ const handleTableDropTable = (event) => {
 
   if (groupWidth <= tableWidth) {
     setDroppedElementGroup([...droppedElementGroup, droppedGroup]);
+    console.log(droppedElementGroup)
   } else {
     console.log("Grupa je preširoka za stol!");
   }
