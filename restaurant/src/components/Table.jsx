@@ -19,18 +19,19 @@ const Table = () => {
     setModalIsOpen(false);
   };
 
-  const addTable =async () => {
+  const addTable = async () => {
     const newTable = {
       name: tableName,
       orientation: parseInt(capacity),
       capacity: capacity,
     };
 
-    const setT = async() =>  setTables([...tables, { ...newTable, draggableItem: null }]);
+    const setT = async () =>
+      setTables([...tables, { ...newTable, draggableItem: null }]);
     await setT();
-    
+
     closeModal();
-    console.log(tables)
+    console.log(tables);
   };
 
   const handleTableItemClick = (index) => {
@@ -50,7 +51,7 @@ const Table = () => {
       </Draggable>
     );
     setTables(updatedTables);
-    console.log(tables)
+    console.log(tables);
   };
 
   return (
@@ -117,7 +118,6 @@ const Table = () => {
 
         <div className={styles.tables_container}>
           {tables.map((table, index) => (
-            
             <div
               key={index}
               className={styles.table_details}
