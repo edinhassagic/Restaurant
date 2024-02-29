@@ -26,11 +26,11 @@ const Room = ({
           droppedElementTable.map((element, index) => (
             <div key={index} className={stylesGroup.groupItem}  onDragOver={handleDragOver} onDrop={handleDropTable}>
               <p>Table Name: {element.name}</p>
-              <p>Number of People: {element.capacity}</p>
+              <p>Capacity: {element.capacity}</p>
               {droppedElementGroup &&
               droppedElementGroup.map((element, index) => (
                 <div key={index} className={stylesGroup.groupItem}>
-                  <p>Table Name: {element.groupName}</p>
+                  <p>Group Name: {element.groupName}</p>
                   <p>Number of People: {element.groupSize}</p>
                 </div>
               ))}
