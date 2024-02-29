@@ -5,10 +5,12 @@ import Table from '../components/Table'
 import styles from "./Home.module.css"
 import { groupData } from '../Data/GroupPeopleData'
 import { useState } from 'react'
+import { TableData } from '../Data/TablesData'
 const Home = () => {
 
 
-  const [droppedElement, setDroppedElement] = useState([]);
+  const [droppedElementGroup, setDroppedElementGroup] = useState([]);
+  const [droppedElementTable, setDroppedElementTable] = useState([]);
 
 const [groups, setGroups] = useState([])
 const handleDragOver = (e) => {
@@ -16,8 +18,13 @@ const handleDragOver = (e) => {
 
 }
 
-const handleDragStart = (e, groupName) => {
-  e.dataTransfer.setData("groupName", groupName);
+const handleDragStart = (e, groupName, type) => {
+
+  if(type === "group"){
+  e.dataTransfer.setData("groupName", groupName);}
+  else{
+    e.dataTransfer.setData("tableName", groupName)
+  }
 };
 
 
@@ -25,18 +32,14 @@ const handleDrop = (e) => {
  console.log(groupData)
   e.preventDefault();
     const groupName = e.dataTransfer.getData("groupName");
-
+    const tableName = e.dataTransfer.getData("tableName")
+    console.log(tableName)
     const groupIndex = groupData.findIndex(group => group.groupName === groupName);
-  console.log(groupData[groupIndex])
-    if (groupIndex === -1) {
-      const newGroup = {
-        groupName: groupName,
-        groupSize: 0,
-      };
-      setGroups([...groups, newGroup]);
-      setDroppedElement([...droppedElement, newGroup]);
-    }
-    setDroppedElement([...droppedElement, groupData[groupIndex]]);
+    const tableIndex = TableData.findIndex(table => table.name === tableName )
+    if (groupIndex != -1 )setDroppedElementGroup([...droppedElementGroup, groupData[groupIndex]]);
+ console.log(TableData[tableIndex])
+
+    if (tableIndex != -1 )setDroppedElementTable([...droppedElementTable, TableData[tableIndex]]);
 
 };
 
@@ -45,8 +48,8 @@ const handleDrop = (e) => {
   return (
     <div className={styles.home} >
         <Group  handleDragStart={handleDragStart} />
-        <Room handleDragOver={handleDragOver} handleDragStart={handleDragStart} handleDrop = {handleDrop} droppedElement={droppedElement}/>
-        <Table/>
+        <Room handleDragOver={handleDragOver} handleDragStart={handleDragStart} handleDrop = {handleDrop} droppedElementGroup={droppedElementGroup} droppedElementTable={droppedElementTable}/>
+        <Table handleDragStart={handleDragStart} />
 
     </div>
   )
