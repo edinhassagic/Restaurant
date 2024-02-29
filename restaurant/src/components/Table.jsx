@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import styles from "./Table.module.css";
 import Modal from "react-modal";
 import Draggable from "react-draggable";
+import { TableData } from "../Data/TablesData";
+
 Modal.setAppElement("#root");
 
 const Table = () => {
@@ -25,10 +27,11 @@ const Table = () => {
       orientation: parseInt(capacity),
       capacity: capacity,
     };
-
-    const setT = async () =>
-      setTables([...tables, { ...newTable, draggableItem: null }]);
+    TableData.push({...newTable, draggableItem : null})
+    const setT = async() =>  setTables([...tables, { ...newTable, draggableItem: null }]);
     await setT();
+
+    
 
     closeModal();
     console.log(tables);
@@ -51,7 +54,7 @@ const Table = () => {
       </Draggable>
     );
     setTables(updatedTables);
-    console.log(tables);
+    console.log(tables)
   };
 
   return (
