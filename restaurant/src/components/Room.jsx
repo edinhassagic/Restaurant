@@ -10,11 +10,11 @@ const Room = ({
   handleDrop,
   handleDropTable,
   droppedElementTable,
-  droppedElementGroup
+  droppedElementGroup,
 }) => {
   useEffect(() => {
     console.log(droppedElementTable, droppedElementGroup);
-  }, [ droppedElementTable, droppedElementGroup]);
+  }, [droppedElementTable, droppedElementGroup]);
   return (
     <div
       className={styles.room}
@@ -22,24 +22,26 @@ const Room = ({
       onDrop={handleDrop}
     >
       <div className={styles.mainbox}>
-      
-           {droppedElementTable &&
+        {droppedElementTable &&
           droppedElementTable.map((element, index) => (
-            <div key={index} className={stylesGroup.groupItem}  onDragOver={handleDragOver} onDrop={handleDropTable}>
+            <div
+              key={index}
+              className={stylesGroup.groupItem}
+              onDragOver={handleDragOver}
+              onDrop={handleDropTable}
+            >
               <p>Table Name: {element.name}</p>
-              <p>Number of People: {element.capacity}</p>
+              <p>Capacity: {element.capacity}</p>
               {droppedElementGroup &&
-              droppedElementGroup.map((element, index) => (
-                <div key={index} className={stylesGroup.groupItem}>
-                  <p>Table Name: {element.groupName}</p>
-                  <p>Number of People: {element.groupSize}</p>
-                </div>
-              ))}
+                droppedElementGroup.map((element, index) => (
+                  <div key={index} className={stylesGroup.groupItem}>
+                    <p>Group Name: {element.groupName}</p>
+                    <p>Number of People: {element.groupSize}</p>
+                  </div>
+                ))}
             </div>
-            
           ))}
       </div>
-
     </div>
   );
 };
