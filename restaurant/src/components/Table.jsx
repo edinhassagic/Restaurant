@@ -11,8 +11,6 @@ const Table = ({handleDragStart}) => {
   const [orientation, setOrientation] = useState("vertikalno");
   const [capacity, setCapacity] = useState(1);
 
-  
-
   const openModal = () => {
     setModalIsOpen(true);
   };
@@ -21,7 +19,7 @@ const Table = ({handleDragStart}) => {
     setModalIsOpen(false);
   };
 
-  const addTable = async () => {
+  const addTable =async () => {
     const newTable = {
       name: tableName,
       orientation: parseInt(capacity),
@@ -100,6 +98,7 @@ const Table = ({handleDragStart}) => {
 
         <div className={styles.tables_container}>
           {tables.map((table, index) => (
+            
             <div
               key={index}
               className={styles.table_details}
