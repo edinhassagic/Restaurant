@@ -100,3 +100,19 @@
   border-radius: 10px;
   border: 1px solid gray;
 }
+
+
+
+.draggableItem {
+  background-color: #66ccff;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  cursor: move;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  position: absolute;
+  z-index: 5;
+}
