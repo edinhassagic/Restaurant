@@ -83,7 +83,7 @@ useEffect(() => {
                       : `${Math.ceil(element.capacity / 2) * 50}px`,
                   display: "flex",
                   flexDirection:
-                    element.orientation === "vertikalno" ? "row" : "column",
+                    element.orientation === "vertikalno" ? "column" : "row",
                 }}
                 draggable
                 onDragOver={handleDragOver}
