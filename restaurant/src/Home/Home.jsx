@@ -27,61 +27,75 @@ const Home = () => {
     }
   };
 
-const handleDrop = (e) => {
-  e.preventDefault();
-  const elementId = e.dataTransfer.getData("TableID");
-
-  if (e.dataTransfer.getData("tableName")) {
-    const tableName = e.dataTransfer.getData("tableName");
-    const tableIndex = TableData.findIndex(
-      (table) => table.name === tableName
+  const handleDeleteGroup = (groupId) => {
+    console.log("Deleting group with ID:", groupId);
+    const updatedDroppedElementGroup = droppedElementGroup.filter(
+      (group) => group.id !== groupId
     );
 
-    if (tableIndex != -1)
-      setDroppedElementTable([
-        ...droppedElementTable,
-        { ...TableData[tableIndex], id: uuidv4(), position: {} },
-      ]);
-  }
- if (elementId) {
-
-  const targetClass = e.target.classList[0]; 
-  const parentRect = e.target.getBoundingClientRect();
-  setDroppedElementTable(prevState => prevState.map(element => {
-    if (element.id == elementId) {
-      const newX = e.clientX - parentRect.left 
-      const newY = e.clientY - parentRect.top 
-      return { ...element, position: { x: newX, y: newY } };
-    }
-    return element;
-  }));
-}
-
-};
-
-const handleTableDropTable = (event, id) => {
-  event.preventDefault();
-  const groupName = event.dataTransfer.getData("groupName");
-  const droppedGroup = groupData.find((group) => group.groupName === groupName);
-  if (!droppedGroup) return;
-  let updatedDroppedElementGroup = [...droppedElementGroup];
-  let updatedDroppedElementTable = [...droppedElementTable];
-  const tableIndex = updatedDroppedElementTable.findIndex((table) => table.id === id);
-  if (tableIndex === -1) return;
-  const tableCapacity = updatedDroppedElementTable[tableIndex].capacity;
-  const totalGroupSize = updatedDroppedElementGroup.reduce((total, group) => total + group.groupSize, 0);
-  // Proveravamo da li nova grupa može stati u sto uzimajući u obzir preostali kapacitet stola nakon dodavanja prethodnih grupa
-  if (droppedGroup.groupSize <= tableCapacity - totalGroupSize) {
-    updatedDroppedElementGroup = [
-      ...updatedDroppedElementGroup,
-      { ...droppedGroup, targetedTable: id },
-    ];
     setDroppedElementGroup(updatedDroppedElementGroup);
-    console.log(updatedDroppedElementGroup);
-  } else {
-    console.log("Kapacitet stola je premali za grupu!");
-  }
-};
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    const elementId = e.dataTransfer.getData("TableID");
+
+    if (e.dataTransfer.getData("tableName")) {
+      const tableName = e.dataTransfer.getData("tableName");
+      const tableIndex = TableData.findIndex(
+        (table) => table.name === tableName
+      );
+
+      if (tableIndex != -1)
+        setDroppedElementTable([
+          ...droppedElementTable,
+          { ...TableData[tableIndex], id: uuidv4(), position: {} },
+        ]);
+    }
+    if (elementId) {
+      const targetClass = e.target.classList[0];
+      const parentRect = e.target.getBoundingClientRect();
+      setDroppedElementTable((prevState) =>
+        prevState.map((element) => {
+          if (element.id == elementId) {
+            const newX = e.clientX - parentRect.left;
+            const newY = e.clientY - parentRect.top;
+            return { ...element, position: { x: newX, y: newY } };
+          }
+          return element;
+        })
+      );
+    }
+  };
+
+  const handleTableDropTable = (event, id) => {
+    event.preventDefault();
+    const groupName = event.dataTransfer.getData("groupName");
+    const droppedGroup = groupData.find(
+      (group) => group.groupName === groupName
+    );
+    if (!droppedGroup) return;
+    let updatedDroppedElementGroup = [...droppedElementGroup];
+    let updatedDroppedElementTable = [...droppedElementTable];
+    const tableIndex = updatedDroppedElementTable.findIndex(
+      (table) => table.id === id
+    );
+    if (tableIndex === -1) return;
+    const tableCapacity = updatedDroppedElementTable[tableIndex].capacity;
+    const totalGroupSize = updatedDroppedElementGroup.reduce(
+      (total, group) => total + group.groupSize,
+      0
+    );
+
+    if (droppedGroup.groupSize <= tableCapacity - totalGroupSize) {
+      const newGroup = { ...droppedGroup, targetedTable: id, id: uuidv4() };
+      updatedDroppedElementGroup = [...updatedDroppedElementGroup, newGroup];
+      setDroppedElementGroup(updatedDroppedElementGroup);
+      console.log(updatedDroppedElementGroup);
+    } else {
+      console.log("Kapacitet stola je premali za grupu!");
+    }
+  };
 
   return (
     <div className={styles.home}>
@@ -94,6 +108,8 @@ const handleTableDropTable = (event, id) => {
         droppedElementTable={droppedElementTable}
         droppedElementGroup={droppedElementGroup}
         setDroppedElementTable={setDroppedElementTable}
+        setDroppedElementGroup={setDroppedElementGroup}
+        handleDeleteGroup={handleDeleteGroup}
       />
       <Table
         handleDragStart={handleDragStart}
