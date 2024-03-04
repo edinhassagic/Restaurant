@@ -17,9 +17,8 @@ const Room = ({
   }, [droppedElementTable, droppedElementGroup]);
 
   useEffect(() => {
-    console.log( droppedElementGroup, "elements");
-  }, [ droppedElementGroup]);
-  
+    console.log(droppedElementGroup, "elements");
+  }, [droppedElementGroup]);
 
   return (
     <div
@@ -31,7 +30,7 @@ const Room = ({
         {droppedElementTable &&
           droppedElementTable.map((element, index) => (
             <div
-              key = {index}
+              key={index}
               className={styles.TableWrapper}
               style={{
                 width:
@@ -45,8 +44,8 @@ const Room = ({
               }}
             >
               {console.log(`Table ${element.name} has ID: ${element.id}`)}
-              <p>Table Name: {element.name}</p>
-
+              <p>Table Name: {element.name}</p>{" "}
+              {/* Changed here: Added closing tag for <p> */}
               <div
                 key={element.id}
                 className={stylesGroup.draggedGroupItem}
@@ -67,10 +66,10 @@ const Room = ({
                 }}
                 onDragOver={handleDragOver}
                 onDrop={(event) => handleDropTable(event, element.id)}
-                
               >
                 {droppedElementGroup &&
-                  droppedElementGroup.map((elementGroup, index) => (
+                  droppedElementGroup[element.id] &&
+                  droppedElementGroup[element.id].map((elementGroup, index) => (
                     <div
                       key={index}
                       className={stylesGroup.draggedGroupItem}
@@ -85,7 +84,7 @@ const Room = ({
                             : `${Math.ceil(elementGroup.groupSize / 2) * 50}px`,
                       }}
                     >
-                      <p>Group:{elementGroup.groupName}</p>
+                      <p>Group: {elementGroup.groupName}</p>
                     </div>
                   ))}
               </div>

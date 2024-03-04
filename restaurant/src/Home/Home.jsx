@@ -43,24 +43,33 @@ const handleDrop = (e) => {
 };
 
 
-const handleTableDropTable = (event, id) => {
+const handleTableDropTable = (event, tableId) => {
   event.preventDefault();
   const groupName = event.dataTransfer.getData("groupName");
   const droppedGroup = groupData.find((group) => group.groupName === groupName);
-  
-  if (!droppedGroup) return; 
 
-  const tableWidth = event.target.offsetWidth; 
+  if (!droppedGroup) return;
 
+  const tableWidth = event.target.offsetWidth;
   const groupWidth = Math.ceil(droppedGroup.groupSize / 2) * 25;
 
   if (groupWidth <= tableWidth) {
-    setDroppedElementGroup([...droppedElementGroup, { ...droppedGroup, targetedTable: id }]);
-    console.log(droppedElementGroup)
+    setDroppedElementGroup((prevGroups) => {
+      const updatedGroups = { ...prevGroups };
+
+      if (!updatedGroups[tableId]) {
+        updatedGroups[tableId] = [];
+      }
+
+      updatedGroups[tableId].push({ ...droppedGroup, targetedTable: tableId });
+      return updatedGroups;
+    });
+    console.log(droppedElementGroup);
   } else {
     console.log("Grupa je preširoka za stol!");
   }
 };
+
 
 
 
