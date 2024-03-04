@@ -11,6 +11,7 @@ import { v4 as uuidv4 } from "uuid";
 const Home = () => {
   const [droppedElementGroup, setDroppedElementGroup] = useState([]);
   const [droppedElementTable, setDroppedElementTable] = useState([]);
+  const [droppedGroupsInTables, setDroppedGroupsInTables] = useState({});
 
   const [groups, setGroups] = useState([]);
   const handleDragOver = (e) => {
@@ -63,13 +64,18 @@ const handleTableDropTable = (event, id) => {
   event.preventDefault();
   const groupName = event.dataTransfer.getData("groupName");
   const droppedGroup = groupData.find((group) => group.groupName === groupName);
-  if (!droppedGroup) return;
+
+  if (!droppedGroup || droppedGroupsInTables[groupName]) return;
+
   let updatedDroppedElementGroup = [...droppedElementGroup];
   let updatedDroppedElementTable = [...droppedElementTable];
   const tableIndex = updatedDroppedElementTable.findIndex((table) => table.id === id);
+
   if (tableIndex === -1) return;
+
   const tableCapacity = updatedDroppedElementTable[tableIndex].capacity;
   const totalGroupSize = updatedDroppedElementGroup.reduce((total, group) => total + group.groupSize, 0);
+
   // Proveravamo da li nova grupa može stati u sto uzimajući u obzir preostali kapacitet stola nakon dodavanja prethodnih grupa
   if (droppedGroup.groupSize <= tableCapacity - totalGroupSize) {
     updatedDroppedElementGroup = [
@@ -77,7 +83,7 @@ const handleTableDropTable = (event, id) => {
       { ...droppedGroup, targetedTable: id },
     ];
     setDroppedElementGroup(updatedDroppedElementGroup);
-    console.log(updatedDroppedElementGroup);
+    setDroppedGroupsInTables((prev) => ({ ...prev, [groupName]: id }));
   } else {
     console.log("Kapacitet stola je premali za grupu!");
   }
