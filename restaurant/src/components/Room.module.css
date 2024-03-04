@@ -1,20 +1,18 @@
 .mainbox {
-    width: 1220px;
-
-    height: 100vh;
-    
-    border: 1px solid black;
-    position: relative;
-    background-color: wheat;
-    
+  width: 1220px;
+  height: 100vh;
+  border: 1px solid black;
+  position: relative;
+  background-color: wheat;
 }
-
 
 .drag_div {
-width: 100px;
-height: 100px;
-background: red;
-position: absolute;
+  width: 100px;
+  height: 100px;
+  background: red;
+  position: absolute;
 }
 
-
+.tableItem {
+    background-color: orange;
+}
