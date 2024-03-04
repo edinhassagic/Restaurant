@@ -3,6 +3,7 @@ import styles from "./Room.module.css";
 import stylesGroup from "./Group.module.css";
 import { groupData } from "../Data/GroupPeopleData";
 import Group from "./Group";
+
 const Room = ({
   handleDragOver,
   handleDragStart,
@@ -16,9 +17,8 @@ const Room = ({
   }, [droppedElementTable, droppedElementGroup]);
 
   useEffect(() => {
-    console.log( droppedElementGroup, "elements");
-  }, [ droppedElementGroup]);
-  
+    console.log(droppedElementGroup, "elements");
+  }, [droppedElementGroup]);
 
   return (
     <div
@@ -30,7 +30,7 @@ const Room = ({
         {droppedElementTable &&
           droppedElementTable.map((element, index) => (
             <div
-              key = {index}
+              key={index}
               className={styles.TableWrapper}
               style={{
                 width:
@@ -66,7 +66,6 @@ const Room = ({
                 }}
                 onDragOver={handleDragOver}
                 onDrop={(event) => handleDropTable(event, element.id)}
-                
               >
                 {droppedElementGroup &&
                   droppedElementGroup.map((elementGroup, index) => (
@@ -84,6 +83,7 @@ const Room = ({
                             : `${Math.ceil(elementGroup.groupSize / 2) * 50}px`,
                       }}
                     >
+                       {console.log(`Group: ${elementGroup.groupName}, Group ID: ${elementGroup.id}`)}
                       <p>Group:{elementGroup.groupName}</p>
                     </div>
                   ))}
