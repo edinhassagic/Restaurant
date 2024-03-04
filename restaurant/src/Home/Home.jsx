@@ -57,7 +57,7 @@ const Home = () => {
   
     const totalGroupSize = updatedDroppedElementGroup.reduce((total, group) => total + group.groupSize, 0);
   
-   
+    // Proveravamo da li nova grupa može stati u sto uzimajući u obzir preostali kapacitet stola nakon dodavanja prethodnih grupa
     if (droppedGroup.groupSize <= tableCapacity - totalGroupSize) {
       updatedDroppedElementGroup = [
         ...updatedDroppedElementGroup,
@@ -69,8 +69,6 @@ const Home = () => {
       console.log("Kapacitet stola je premali za grupu!");
     }
   };
-  
-  
   
   return (
     <div className={styles.home}>
