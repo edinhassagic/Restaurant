@@ -10,28 +10,39 @@ const Room = ({
   handleDropTable,
   droppedElementTable,
   droppedElementGroup,
-  setDroppedElementTable
+  setDroppedElementTable,
 }) => {
-
-  const [tables, setTables] = useState([])
-  const [groups, setGroups] = useState([])
-
+  const [tables, setTables] = useState([]);
+  const [groups, setGroups] = useState([]);
 
   useEffect(() => {
-    setTables(droppedElementTable)
-    setGroups(droppedElementGroup)
-    console.log("promijenio nesto ")
-    console.log(droppedElementGroup, "grupe")
-}, [setDroppedElementTable]);
-useEffect(() => {
-  setTables(droppedElementTable)
-  setGroups(droppedElementGroup)
-  console.log(droppedElementGroup, "grupe")
-}, []);
-
+    setTables(droppedElementTable);
+    setGroups(droppedElementGroup);
+    console.log("promijenio nesto ");
+    console.log(droppedElementGroup, "grupe");
+  }, [setDroppedElementTable]);
+  useEffect(() => {
+    setTables(droppedElementTable);
+    setGroups(droppedElementGroup);
+    console.log(droppedElementGroup, "grupe");
+  }, []);
 
   const handleDragTable = (event, elementId) => {
     event.dataTransfer.setData("TableID", elementId);
+  };
+
+  const handleDragGroup = (event, groupId) => {
+    event.dataTransfer.setData("groupId", groupId);
+  };
+
+  const handleDragOverGroup = (event) => {
+    event.preventDefault();
+  };
+
+  const handleDropGroup = (event, droppedGroupId) => {
+    const draggedGroupId = event.dataTransfer.getData("groupId");
+    // Logika za promenu redosleda grupa u nizu
+    // Na primer, zamena elemenata u nizu droppedElementGroup
   };
 
   return (
@@ -40,8 +51,11 @@ useEffect(() => {
       onDragOver={handleDragOver}
       onDrop={handleDrop}
     >
-      <div className={styles.mainbox}
-        onClick = { (e) => {console.log(e.clientX, e.clientY, "koordinate")}}
+      <div
+        className={styles.mainbox}
+        onClick={(e) => {
+          console.log(e.clientX, e.clientY, "koordinate");
+        }}
       >
         {droppedElementTable &&
           droppedElementTable.map((element, index) => (
@@ -59,16 +73,15 @@ useEffect(() => {
                     : `${Math.ceil(element.capacity / 2) * 50}px`,
                 position: "relative",
                 left: element.position ? `${element.position.x}px` : "0px",
-                top: element.position ? `${element.position.y}px` : `0px`,  
+                top: element.position ? `${element.position.y}px` : `0px`,
               }}
               draggable
               onDragStart={(event) => handleDragTable(event, element.id)}
               onDrop={handleDrop}
             >
-{              console.log(element.position, "position")
-}              {console.log(`Table ${element.name} has ID: ${element.id}`)}
+              {console.log(element.position, "position")}{" "}
+              {console.log(`Table ${element.name} has ID: ${element.id}`)}
               <p style={{ fontSize: "10px" }}>Table Name: {element.name}</p>
-
               <div
                 key={element.id}
                 className={stylesGroup.draggedGroupItem}
@@ -90,26 +103,39 @@ useEffect(() => {
                 onDrop={(event) => handleDropTable(event, element.id)}
               >
                 {droppedElementGroup &&
-                  droppedElementGroup.map((elementGroup, index) => (
+                  droppedElementGroup.map((elementGroup, index) =>
                     elementGroup.targetedTable === element.id ? (
-                    <div
-                      key={index}
-                      className={stylesGroup.draggedGroupItem}
-                      style={{
-                        width:
-                          element.orientation === "horizontalno"
-                            ? `${Math.ceil(elementGroup.groupSize / 2) * 50}px`
-                            : "50px",
-                        height:
-                          element.orientation === "horizontalno"
-                            ? "50px"
-                            : `${Math.ceil(elementGroup.groupSize / 2) * 50}px`,
-                      }}
-                    >
-                       {console.log(`Group: ${elementGroup.groupName}, Group ID: ${elementGroup.id}`)}
-                      <p>Group:{elementGroup.groupName}</p>
-                    </div>): null
-                  ))}
+                      <div
+                        key={index}
+                        draggable
+                        onDrag={(event) =>
+                          handleDragGroup(event, elementGroup.id)
+                        }
+                        onDragOver={(event) => handleDragOverGroup(event)}
+                        onDrop={(event) => handleDropGroup(event, elementGroup.id)}
+                        className={stylesGroup.draggedGroupItem}
+                        style={{
+                          width:
+                            element.orientation === "horizontalno"
+                              ? `${
+                                  Math.ceil(elementGroup.groupSize / 2) * 50
+                                }px`
+                              : "50px",
+                          height:
+                            element.orientation === "horizontalno"
+                              ? "50px"
+                              : `${
+                                  Math.ceil(elementGroup.groupSize / 2) * 50
+                                }px`,
+                        }}
+                      >
+                        {console.log(
+                          `Group: ${elementGroup.groupName}, Group ID: ${elementGroup.id}`
+                        )}
+                        <p>Group:{elementGroup.groupName}</p>
+                      </div>
+                    ) : null
+                  )}
               </div>
             </div>
           ))}
