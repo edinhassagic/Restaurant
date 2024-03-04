@@ -72,11 +72,16 @@ const Home = () => {
 
   const handleDeleteGroup = (groupId) => {
     console.log("Deleting group with ID:", groupId);
+    
     const updatedDroppedElementGroup = droppedElementGroup.filter(
       (group) => group.id !== groupId
     );
-
+    console.log(updatedDroppedElementGroup, "updatedDroppedElementGroup")
+    const updateddroppedGroupsInTables = droppedElementTable.filter(
+      (group) => group.id !== groupId
+    );
     setDroppedElementGroup(updatedDroppedElementGroup);
+    setDroppedGroupsInTables(updateddroppedGroupsInTables)
   };
   const handleTableDropTable = (event, id) => {
     event.preventDefault();
@@ -86,6 +91,11 @@ const Home = () => {
     );
     console.log(droppedGroup);
     if (!droppedGroup || droppedGroupsInTables[groupName]) return;
+    const postoji = droppedElementGroup.findIndex(
+      (group) => group.targetedTable === id
+    );
+    if (postoji == -1) return
+    console.log("postoji li", postoji)
 
     let updatedDroppedElementGroup = [...droppedElementGroup];
     let updatedDroppedElementTable = [...droppedElementTable];
