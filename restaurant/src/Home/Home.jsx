@@ -50,10 +50,20 @@ const handleTableDropTable = (event, tableId) => {
 
   if (!droppedGroup) return;
 
+  setDroppedElementGroup((prevGroups) => {
+    const updatedGroups = { ...prevGroups };
+
+    if (!updatedGroups[tableId]) {
+      updatedGroups[tableId] = [];
+    }
+
+    updatedGroups[tableId].push({ ...droppedGroup, targetedTable: tableId });
+    return updatedGroups;
+  });
   const tableWidth = event.target.offsetWidth;
   const groupWidth = Math.ceil(droppedGroup.groupSize / 2) * 25;
 
-  if (groupWidth <= tableWidth) {
+  {/*if (groupWidth <= tableWidth) {
     setDroppedElementGroup((prevGroups) => {
       const updatedGroups = { ...prevGroups };
 
@@ -67,7 +77,8 @@ const handleTableDropTable = (event, tableId) => {
     console.log(droppedElementGroup);
   } else {
     console.log("Grupa je preširoka za stol!");
-  }
+  }*/}
+
 };
 
 
