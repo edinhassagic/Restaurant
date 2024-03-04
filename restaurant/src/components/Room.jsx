@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Room.module.css";
-import stylesGroup from "./Group.module.css";
+import stylesGroup from "./Group.module.css"; 
 import { groupData } from "../Data/GroupPeopleData";
 import Group from "./Group";
 const Room = ({
