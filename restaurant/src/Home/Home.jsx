@@ -32,49 +32,59 @@ const Home = () => {
 
   const handleDrop = (e) => {
     e.preventDefault();
-    if(!isGroupClicked){const elementId = e.dataTransfer.getData("TableID");
+    if (!isGroupClicked) {
+      const elementId = e.dataTransfer.getData("TableID");
 
-    if (e.dataTransfer.getData("tableName")) {
-      const tableName = e.dataTransfer.getData("tableName");
-      const tableIndex = TableData.findIndex(
-        (table) => table.name === tableName
-      );
-
-      if (tableIndex != -1) {
-        const tableAlreadyDropped = droppedElementTable.some(
-          (element) => element.name === tableName
+      if (e.dataTransfer.getData("tableName")) {
+        const tableName = e.dataTransfer.getData("tableName");
+        const tableIndex = TableData.findIndex(
+          (table) => table.name === tableName
         );
 
-        if (!tableAlreadyDropped) {
-          setDroppedElementTable((prevState) => [
-            ...prevState,
-            { ...TableData[tableIndex], id: uuidv4(), position: {} },
-          ]);
+        if (tableIndex != -1) {
+          const tableAlreadyDropped = droppedElementTable.some(
+            (element) => element.name === tableName
+          );
+
+          if (!tableAlreadyDropped) {
+            setDroppedElementTable((prevState) => [
+              ...prevState,
+              { ...TableData[tableIndex], id: uuidv4(), position: {} },
+            ]);
+          }
         }
       }
+      if (elementId) {
+        const parentRect = parent.current.getBoundingClientRect();
+        setDroppedElementTable((prevState) =>
+          prevState.map((element) => {
+            if (element.id == elementId) {
+              const newX = e.clientX - parentRect.left;
+              const newY = e.clientY - parentRect.top;
+              return { ...element, position: { x: newX, y: newY } };
+            }
+            return element;
+          })
+        );
+      }
     }
-    if (elementId) {
-      const parentRect = parent.current.getBoundingClientRect();
-      setDroppedElementTable((prevState) =>
-        prevState.map((element) => {
-          if (element.id == elementId) {
-            const newX = e.clientX - parentRect.left;
-            const newY = e.clientY - parentRect.top;
-            return { ...element, position: { x: newX, y: newY } };
-          }
-          return element;
-        })
-      );
-    }}
   };
 
+  const handleDeleteGroup = (groupId) => {
+    console.log("Deleting group with ID:", groupId);
+    const updatedDroppedElementGroup = droppedElementGroup.filter(
+      (group) => group.id !== groupId
+    );
+
+    setDroppedElementGroup(updatedDroppedElementGroup);
+  };
   const handleTableDropTable = (event, id) => {
     event.preventDefault();
     const groupName = event.dataTransfer.getData("groupName");
     const droppedGroup = groupData.find(
       (group) => group.groupName === groupName
     );
-    console.log(droppedGroup)
+    console.log(droppedGroup);
     if (!droppedGroup || droppedGroupsInTables[groupName]) return;
 
     let updatedDroppedElementGroup = [...droppedElementGroup];
@@ -84,18 +94,18 @@ const Home = () => {
     );
 
     if (tableIndex === -1) return;
-    console.log(droppedElementTable[tableIndex])
+    console.log(droppedElementTable[tableIndex]);
     const tableCapacity = updatedDroppedElementTable[tableIndex].capacity;
     const totalGroupSize = updatedDroppedElementGroup
-    .filter((group) => group.targetedTable === id)
-    .reduce((total, group) => total + group.groupSize, 0);
+      .filter((group) => group.targetedTable === id)
+      .reduce((total, group) => total + group.groupSize, 0);
 
     // Proveravamo da li nova grupa može stati u sto uzimajući u obzir preostali kapacitet stola nakon dodavanja prethodnih grupa
-    console.log(tableCapacity ,  totalGroupSize);
-    if (droppedGroup.groupSize <= tableCapacity - totalGroupSize +1) {
+    console.log(tableCapacity, totalGroupSize);
+    if (droppedGroup.groupSize <= tableCapacity - totalGroupSize + 1) {
       updatedDroppedElementGroup = [
         ...updatedDroppedElementGroup,
-        { ...droppedGroup, targetedTable: id , id: uuidv4()},
+        { ...droppedGroup, targetedTable: id, id: uuidv4() },
       ];
       setDroppedElementGroup(updatedDroppedElementGroup);
       setDroppedGroupsInTables((prev) => ({ ...prev, [groupName]: id }));
@@ -119,6 +129,7 @@ const Home = () => {
           setDroppedElementGroup={setDroppedElementGroup}
           isGroupClicked={isGroupClicked}
           setIsGroupClicked={setIsGroupClicked}
+          handleDeleteGroup={handleDeleteGroup}
         />
       </div>
       <Table

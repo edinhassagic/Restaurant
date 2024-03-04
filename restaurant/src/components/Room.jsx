@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Room.module.css";
-import stylesGroup from "./Group.module.css"; 
-import { groupData } from "../Data/GroupPeopleData";
-import Group from "./Group";
+import stylesGroup from "./Group.module.css";
+
 const Room = ({
   handleDragOver,
-  handleDragStart,
+
   handleDrop,
   handleDropTable,
   droppedElementTable,
@@ -13,7 +12,8 @@ const Room = ({
   setDroppedElementTable,
   setDroppedElementGroup,
   isGroupClicked, 
-  setIsGroupClicked
+  setIsGroupClicked,
+  handleDeleteGroup
 }) => {
 
 
@@ -31,6 +31,9 @@ const Room = ({
   };
   const handleDragOverGroup = (event) => {
     event.preventDefault();
+  };
+  const deleteGroup = (groupId) => {
+    handleDeleteGroup(groupId);
   };
 
   const handleDropGroup = async (event, droppedGroupId) => {
@@ -86,7 +89,7 @@ const Room = ({
               onDragStart={(event) => handleDragTable(event, element.id)}
               onDrop={handleDrop}
             >
-              {console.log(element.position, "position")}{" "}
+              {console.log(element.position, "position")}
               {console.log(`Table ${element.name} has ID: ${element.id}`)}
               <p style={{ fontSize: "10px" }}>Table Name: {element.name}</p>
               <div
@@ -138,10 +141,13 @@ const Room = ({
                                 }px`,
                         }}
                       >
-                        {console.log(
-                          `Group: ${elementGroup.groupName}, Group ID: ${elementGroup.id}`
-                        )}
                         <p>Group:{elementGroup.groupName}</p>
+                        <span
+                          className={stylesGroup.deleteIcon}
+                          onClick={() => deleteGroup(elementGroup.id)}
+                        >
+                          X
+                        </span>
                       </div>
                     ) : null
                   )}
