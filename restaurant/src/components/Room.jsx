@@ -68,8 +68,8 @@ const Room = ({
                 onDrop={(event) => handleDropTable(event, element.id)}
               >
                 {droppedElementGroup &&
-                  droppedElementGroup[element.id] &&
-                  droppedElementGroup[element.id].map((elementGroup, index) => (
+                  droppedElementGroup.map((elementGroup, index) => (
+                    elementGroup.targetedTable === element.id ? (
                     <div
                       key={index}
                       className={stylesGroup.draggedGroupItem}
@@ -84,8 +84,9 @@ const Room = ({
                             : `${Math.ceil(elementGroup.groupSize / 2) * 50}px`,
                       }}
                     >
-                      <p>Group: {elementGroup.groupName}</p>
-                    </div>
+                       {console.log(`Group: ${elementGroup.groupName}, Group ID: ${elementGroup.id}`)}
+                      <p>Group:{elementGroup.groupName}</p>
+                    </div>): null
                   ))}
               </div>
             </div>

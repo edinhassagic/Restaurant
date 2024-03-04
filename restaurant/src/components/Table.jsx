@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import styles from "./Table.module.css";
 import Modal from "react-modal";
 import { TableData } from "../Data/TablesData";
+import { v4 as uuidv4 } from "uuid";
+
 Modal.setAppElement("#root");
 
 const Table = ({
