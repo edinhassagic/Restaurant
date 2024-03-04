@@ -24,9 +24,6 @@ groupData.push({...newGroup, draggableItem: null })
   setShowModal(false);
   };
 
-  /*  const handleDragStart = (index) => (event) => {
-    event.dataTransfer.setData("text/plain", index.toString());
-  };*/
 
   return (
     <>

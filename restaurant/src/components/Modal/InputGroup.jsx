@@ -1,20 +1,27 @@
-import React, { useState } from 'react';
-import styles from "./modal.module.css"
+import React, { useState } from "react";
+import styles from "./modal.module.css";
 
 function InputGroup({ onSave, setShowModal }) {
-  const [groupName, setGroupName] = useState('');
-  const [groupSize, setGroupSize] = useState('');
+  const [groupName, setGroupName] = useState("");
+  const [groupSize, setGroupSize] = useState("");
 
   const handleSave = () => {
     onSave({ groupName, groupSize: parseInt(groupSize) });
-    setGroupName('');
-    setGroupSize('');
+    setGroupName("");
+    setGroupSize("");
   };
 
   return (
     <div className={styles.modal}>
       <div className={styles.modalContent}>
-        <span className={styles.close} onClick= {()=> {  setShowModal(false)}}>&times;</span>
+        <span
+          className={styles.close}
+          onClick={() => {
+            setShowModal(false);
+          }}
+        >
+          &times;
+        </span>
         <h2>Create Group</h2>
         <label htmlFor="groupName">Group Name:</label>
         <input
