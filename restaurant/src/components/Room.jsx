@@ -34,11 +34,11 @@ const Room = ({
               className={styles.TableWrapper}
               style={{
                 width:
-                  element.orientation === "vertikalno"
+                  element.orientation === "horizontalno"
                     ? `${Math.ceil(element.capacity / 2) * 50}px`
                     : "60px",
                 height:
-                  element.orientation === "vertikalno"
+                  element.orientation === "horizontalno"
                     ? "60px"
                     : `${Math.ceil(element.capacity / 2) * 50}px`,
               }}
@@ -52,16 +52,16 @@ const Room = ({
                 style={{
                   margin: "20px",
                   width:
-                    element.orientation === "vertikalno"
+                    element.orientation === "horizontalno"
                       ? `${Math.ceil(element.capacity / 2) * 50}px`
                       : "50px",
                   height:
-                    element.orientation === "vertikalno"
+                    element.orientation === "horizontalno"
                       ? "50px"
                       : `${Math.ceil(element.capacity / 2) * 50}px`,
                   display: "flex",
                   flexDirection:
-                    element.orientation === "vertikalno" ? "row" : "column",
+                    element.orientation === "horizontalno" ? "row" : "column",
                   border: "0.5px solid black",
                 }}
                 onDragOver={handleDragOver}
@@ -75,11 +75,11 @@ const Room = ({
                       className={stylesGroup.draggedGroupItem}
                       style={{
                         width:
-                          element.orientation === "vertikalno"
+                          element.orientation === "horizontalno"
                             ? `${Math.ceil(elementGroup.groupSize / 2) * 50}px`
                             : "50px",
                         height:
-                          element.orientation === "vertikalno"
+                          element.orientation === "horizontalno"
                             ? "50px"
                             : `${Math.ceil(elementGroup.groupSize / 2) * 50}px`,
                       }}
