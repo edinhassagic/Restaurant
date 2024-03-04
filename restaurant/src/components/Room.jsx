@@ -30,7 +30,7 @@ const Room = ({
         {droppedElementTable &&
           droppedElementTable.map((element, index) => (
             <div
-              
+              key = {index}
               className={styles.TableWrapper}
               style={{
                 width:
@@ -43,10 +43,11 @@ const Room = ({
                     : `${Math.ceil(element.capacity / 2) * 50}px`,
               }}
             >
+              {console.log(`Table ${element.name} has ID: ${element.id}`)}
               <p>Table Name: {element.name}</p>
 
               <div
-                key={index}
+                key={element.id}
                 className={stylesGroup.draggedGroupItem}
                 style={{
                   margin: "20px",
@@ -64,7 +65,7 @@ const Room = ({
                   border: "0.5px solid black",
                 }}
                 onDragOver={handleDragOver}
-                onDrop={handleDropTable}
+                onDrop={(event) => handleDropTable(event, element.id)}
                 
               >
                 {droppedElementGroup &&
