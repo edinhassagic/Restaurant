@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import Group from "../components/Group";
 import Room from "../components/Room";
 import Table from "../components/Table";
@@ -9,6 +9,9 @@ import { TableData } from "../Data/TablesData";
 import { v4 as uuidv4 } from "uuid";
 
 const Home = () => {
+
+
+  const parent  = useRef(null)
   const [droppedElementGroup, setDroppedElementGroup] = useState([]);
   const [droppedElementTable, setDroppedElementTable] = useState([]);
 
@@ -45,12 +48,11 @@ const handleDrop = (e) => {
   }
  if (elementId) {
 
-  const targetClass = e.target.classList[0]; 
-  const parentRect = e.target.getBoundingClientRect();
+  const parentRect = parent.current.getBoundingClientRect(); 
   setDroppedElementTable(prevState => prevState.map(element => {
     if (element.id == elementId) {
       const newX = e.clientX - parentRect.left 
-      const newY = e.clientY - parentRect.top 
+      const newY = e.clientY - parentRect.top
       return { ...element, position: { x: newX, y: newY } };
     }
     return element;
@@ -71,6 +73,7 @@ const handleTableDropTable = (event, id) => {
   const tableCapacity = updatedDroppedElementTable[tableIndex].capacity;
   const totalGroupSize = updatedDroppedElementGroup.reduce((total, group) => total + group.groupSize, 0);
   // Proveravamo da li nova grupa može stati u sto uzimajući u obzir preostali kapacitet stola nakon dodavanja prethodnih grupa
+  console.log(tableCapacity - totalGroupSize)
   if (droppedGroup.groupSize <= tableCapacity - totalGroupSize) {
     updatedDroppedElementGroup = [
       ...updatedDroppedElementGroup,
@@ -86,6 +89,7 @@ const handleTableDropTable = (event, id) => {
   return (
     <div className={styles.home}>
       <Group handleDragStart={handleDragStart} />
+      <div ref={parent}>
       <Room
         handleDragOver={handleDragOver}
         handleDragStart={handleDragStart}
@@ -95,6 +99,8 @@ const handleTableDropTable = (event, id) => {
         droppedElementGroup={droppedElementGroup}
         setDroppedElementTable={setDroppedElementTable}
       />
+
+</div>
       <Table
         handleDragStart={handleDragStart}
         droppedElementGroup={droppedElementGroup}

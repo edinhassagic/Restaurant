@@ -71,7 +71,7 @@ const Room = ({
                   element.orientation === "horizontalno"
                     ? "60px"
                     : `${Math.ceil(element.capacity / 2) * 50}px`,
-                position: "relative",
+                position: "absolute",
                 left: element.position ? `${element.position.x}px` : "0px",
                 top: element.position ? `${element.position.y}px` : `0px`,
               }}
