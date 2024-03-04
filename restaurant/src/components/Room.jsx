@@ -3,7 +3,6 @@ import styles from "./Room.module.css";
 import stylesGroup from "./Group.module.css";
 import { groupData } from "../Data/GroupPeopleData";
 import Group from "./Group";
-
 const Room = ({
   handleDragOver,
   handleDragStart,
@@ -11,14 +10,29 @@ const Room = ({
   handleDropTable,
   droppedElementTable,
   droppedElementGroup,
+  setDroppedElementTable
 }) => {
-  useEffect(() => {
-    console.log(droppedElementTable, droppedElementGroup, "elements");
-  }, [droppedElementTable, droppedElementGroup]);
+
+  const [tables, setTables] = useState([])
+  const [groups, setGroups] = useState([])
+
 
   useEffect(() => {
-    console.log(droppedElementGroup, "elements");
-  }, [droppedElementGroup]);
+    setTables(droppedElementTable)
+    setGroups(droppedElementGroup)
+    console.log("promijenio nesto ")
+    console.log(droppedElementGroup, "grupe")
+}, [setDroppedElementTable]);
+useEffect(() => {
+  setTables(droppedElementTable)
+  setGroups(droppedElementGroup)
+  console.log(droppedElementGroup, "grupe")
+}, []);
+
+
+  const handleDragTable = (event, elementId) => {
+    event.dataTransfer.setData("TableID", elementId);
+  };
 
   return (
     <div
@@ -26,7 +40,9 @@ const Room = ({
       onDragOver={handleDragOver}
       onDrop={handleDrop}
     >
-      <div className={styles.mainbox}>
+      <div className={styles.mainbox}
+        onClick = { (e) => {console.log(e.clientX, e.clientY, "koordinate")}}
+      >
         {droppedElementTable &&
           droppedElementTable.map((element, index) => (
             <div
@@ -41,16 +57,22 @@ const Room = ({
                   element.orientation === "horizontalno"
                     ? "60px"
                     : `${Math.ceil(element.capacity / 2) * 50}px`,
+                position: "relative",
+                left: element.position ? `${element.position.x}px` : "0px",
+                top: element.position ? `${element.position.y}px` : `0px`,  
               }}
+              draggable
+              onDragStart={(event) => handleDragTable(event, element.id)}
+              onDrop={handleDrop}
             >
-              {console.log(`Table ${element.name} has ID: ${element.id}`)}
-              <p>Table Name: {element.name}</p>{" "}
-              {/* Changed here: Added closing tag for <p> */}
+{              console.log(element.position, "position")
+}              {console.log(`Table ${element.name} has ID: ${element.id}`)}
+              <p style={{ fontSize: "10px" }}>Table Name: {element.name}</p>
+
               <div
                 key={element.id}
                 className={stylesGroup.draggedGroupItem}
                 style={{
-                  margin: "20px",
                   width:
                     element.orientation === "horizontalno"
                       ? `${Math.ceil(element.capacity / 2) * 50}px`
@@ -61,9 +83,9 @@ const Room = ({
                       : `${Math.ceil(element.capacity / 2) * 50}px`,
                   display: "flex",
                   flexDirection:
-                    element.orientation === "horizontalno" ? "row" : "column",
-                  border: "0.5px solid black",
+                    element.orientation === "vertikalno" ? "row" : "column",
                 }}
+                draggable
                 onDragOver={handleDragOver}
                 onDrop={(event) => handleDropTable(event, element.id)}
               >

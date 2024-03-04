@@ -28,13 +28,34 @@ const Home = () => {
   };
 
 const handleDrop = (e) => {
- console.log(TableData)
- console.log("drop")
   e.preventDefault();
-    const tableName = e.dataTransfer.getData("tableName")
-    const tableIndex = TableData.findIndex(table => table.name === tableName )
+  const elementId = e.dataTransfer.getData("TableID");
 
-    if (tableIndex != -1 )setDroppedElementTable([...droppedElementTable, {...TableData[tableIndex], id: uuidv4()}]);
+  if (e.dataTransfer.getData("tableName")) {
+    const tableName = e.dataTransfer.getData("tableName");
+    const tableIndex = TableData.findIndex(
+      (table) => table.name === tableName
+    );
+
+    if (tableIndex != -1)
+      setDroppedElementTable([
+        ...droppedElementTable,
+        { ...TableData[tableIndex], id: uuidv4(), position: {} },
+      ]);
+  }
+ if (elementId) {
+
+  const targetClass = e.target.classList[0]; 
+  const parentRect = e.target.getBoundingClientRect();
+  setDroppedElementTable(prevState => prevState.map(element => {
+    if (element.id == elementId) {
+      const newX = e.clientX - parentRect.left 
+      const newY = e.clientY - parentRect.top 
+      return { ...element, position: { x: newX, y: newY } };
+    }
+    return element;
+  }));
+}
 
 };
 
@@ -63,13 +84,25 @@ const handleTableDropTable = (event, id) => {
 };
 
   return (
-    <div className={styles.home} >
-        <Group  handleDragStart={handleDragStart} />
-        <Room handleDragOver={handleDragOver} handleDragStart={handleDragStart} handleDrop = {handleDrop} handleDropTable={handleTableDropTable} droppedElementTable={droppedElementTable} droppedElementGroup={droppedElementGroup} />
-        <Table handleDragStart={handleDragStart} droppedElementGroup={droppedElementGroup}  handleDrop = {handleTableDropTable} handleDragOver={handleDragOver}/>
-
+    <div className={styles.home}>
+      <Group handleDragStart={handleDragStart} />
+      <Room
+        handleDragOver={handleDragOver}
+        handleDragStart={handleDragStart}
+        handleDrop={handleDrop}
+        handleDropTable={handleTableDropTable}
+        droppedElementTable={droppedElementTable}
+        droppedElementGroup={droppedElementGroup}
+        setDroppedElementTable={setDroppedElementTable}
+      />
+      <Table
+        handleDragStart={handleDragStart}
+        droppedElementGroup={droppedElementGroup}
+        handleDrop={handleTableDropTable}
+        handleDragOver={handleDragOver}
+      />
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
