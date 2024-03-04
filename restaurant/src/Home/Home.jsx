@@ -13,6 +13,7 @@ const Home = () => {
   const [droppedElementGroup, setDroppedElementGroup] = useState([]);
   const [droppedElementTable, setDroppedElementTable] = useState([]);
   const [droppedGroupsInTables, setDroppedGroupsInTables] = useState({});
+  const [isGroupClicked, setIsGroupClicked] = useState(false);
 
   const [groups, setGroups] = useState([]);
   const handleDragOver = (e) => {
@@ -31,7 +32,7 @@ const Home = () => {
 
   const handleDrop = (e) => {
     e.preventDefault();
-    const elementId = e.dataTransfer.getData("TableID");
+    if(!isGroupClicked){const elementId = e.dataTransfer.getData("TableID");
 
     if (e.dataTransfer.getData("tableName")) {
       const tableName = e.dataTransfer.getData("tableName");
@@ -64,7 +65,7 @@ const Home = () => {
           return element;
         })
       );
-    }
+    }}
   };
 
   const handleTableDropTable = (event, id) => {
@@ -94,7 +95,7 @@ const Home = () => {
     if (droppedGroup.groupSize <= tableCapacity - totalGroupSize +1) {
       updatedDroppedElementGroup = [
         ...updatedDroppedElementGroup,
-        { ...droppedGroup, targetedTable: id },
+        { ...droppedGroup, targetedTable: id , id: uuidv4()},
       ];
       setDroppedElementGroup(updatedDroppedElementGroup);
       setDroppedGroupsInTables((prev) => ({ ...prev, [groupName]: id }));
@@ -115,6 +116,9 @@ const Home = () => {
           droppedElementTable={droppedElementTable}
           droppedElementGroup={droppedElementGroup}
           setDroppedElementTable={setDroppedElementTable}
+          setDroppedElementGroup={setDroppedElementGroup}
+          isGroupClicked={isGroupClicked}
+          setIsGroupClicked={setIsGroupClicked}
         />
       </div>
       <Table

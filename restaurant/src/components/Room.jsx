@@ -11,40 +11,47 @@ const Room = ({
   droppedElementTable,
   droppedElementGroup,
   setDroppedElementTable,
+  setDroppedElementGroup,
+  isGroupClicked, 
+  setIsGroupClicked
 }) => {
-  const [tables, setTables] = useState([]);
-  const [groups, setGroups] = useState([]);
 
-  useEffect(() => {
-    setTables(droppedElementTable);
-    setGroups(droppedElementGroup);
-    console.log("promijenio nesto ");
-    console.log(droppedElementGroup, "grupe");
-  }, [setDroppedElementTable]);
-  useEffect(() => {
-    setTables(droppedElementTable);
-    setGroups(droppedElementGroup);
-    console.log(droppedElementGroup, "grupe");
-  }, []);
 
-  const handleDragTable = (event, elementId) => {
-    event.dataTransfer.setData("TableID", elementId);
+
+  const handleDragTable = async (event, elementId) => {
+    if (!isGroupClicked) { 
+      event.dataTransfer.setData("TableID", elementId);
+    }
   };
 
   const handleDragGroup = (event, groupId) => {
+    setIsGroupClicked(true);
+    console.log(groupId )
     event.dataTransfer.setData("groupId", groupId);
   };
-
   const handleDragOverGroup = (event) => {
     event.preventDefault();
   };
 
-  const handleDropGroup = (event, droppedGroupId) => {
-    const draggedGroupId = event.dataTransfer.getData("groupId");
-    // Logika za promenu redosleda grupa u nizu
-    // Na primer, zamena elemenata u nizu droppedElementGroup
-  };
-
+  const handleDropGroup = async (event, droppedGroupId) => {
+    const draggedGroupId = await event.dataTransfer.getData("groupId");
+    console.log(draggedGroupId)
+    // Pronađi indekse grupa u nizu droppedElement  Group
+    const draggedGroupIndex = droppedElementGroup.findIndex(group => group.id === draggedGroupId);
+    const droppedGroupIndex = droppedElementGroup.findIndex(group => group.id === droppedGroupId);
+    
+    if (draggedGroupIndex !== -1 && droppedGroupIndex !== -1) {
+      // Kreiraj kopiju niza droppedElementGroup radi promene redosleda
+      const updatedGroups = [...droppedElementGroup];
+      // Zamena elemenata u nizu
+      [updatedGroups[draggedGroupIndex], updatedGroups[droppedGroupIndex]] = [updatedGroups[droppedGroupIndex], updatedGroups[draggedGroupIndex]];
+      
+      // Ažuriraj state sa novim nizom grupa
+      setDroppedElementGroup(updatedGroups);
+    }
+    setIsGroupClicked(false); 
+    }
+  
   return (
     <div
       className={styles.room}
@@ -108,11 +115,13 @@ const Room = ({
                       <div
                         key={index}
                         draggable
-                        onDrag={(event) =>
+                        onDragStart={(event) =>
                           handleDragGroup(event, elementGroup.id)
                         }
                         onDragOver={(event) => handleDragOverGroup(event)}
-                        onDrop={(event) => handleDropGroup(event, elementGroup.id)}
+                        onDrop={(event) =>
+                          handleDropGroup(event, elementGroup.id)
+                        }
                         className={stylesGroup.draggedGroupItem}
                         style={{
                           width:
