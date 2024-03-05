@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React  from "react";
 import styles from "./Room.module.css";
 import stylesGroup from "./Group.module.css";
 
@@ -9,7 +9,6 @@ const Room = ({
   handleDropTable,
   droppedElementTable,
   droppedElementGroup,
-  setDroppedElementTable,
   setDroppedElementGroup,
   isGroupClicked,
   setIsGroupClicked,
