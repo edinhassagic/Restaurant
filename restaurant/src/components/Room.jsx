@@ -11,22 +11,19 @@ const Room = ({
   droppedElementGroup,
   setDroppedElementTable,
   setDroppedElementGroup,
-  isGroupClicked, 
+  isGroupClicked,
   setIsGroupClicked,
-  handleDeleteGroup
+  handleDeleteGroup,
 }) => {
-
-
-
   const handleDragTable = async (event, elementId) => {
-    if (!isGroupClicked) { 
+    if (!isGroupClicked) {
       event.dataTransfer.setData("TableID", elementId);
     }
   };
 
   const handleDragGroup = (event, groupId) => {
     setIsGroupClicked(true);
-    console.log(groupId )
+    console.log(groupId);
     event.dataTransfer.setData("groupId", groupId);
   };
   const handleDragOverGroup = (event) => {
@@ -38,23 +35,28 @@ const Room = ({
 
   const handleDropGroup = async (event, droppedGroupId) => {
     const draggedGroupId = await event.dataTransfer.getData("groupId");
-    console.log(draggedGroupId)
-    // Pronađi indekse grupa u nizu droppedElement  Group
-    const draggedGroupIndex = droppedElementGroup.findIndex(group => group.id === draggedGroupId);
-    const droppedGroupIndex = droppedElementGroup.findIndex(group => group.id === droppedGroupId);
-    
+    console.log(draggedGroupId);
+
+    const draggedGroupIndex = droppedElementGroup.findIndex(
+      (group) => group.id === draggedGroupId
+    );
+    const droppedGroupIndex = droppedElementGroup.findIndex(
+      (group) => group.id === droppedGroupId
+    );
+
     if (draggedGroupIndex !== -1 && droppedGroupIndex !== -1) {
-      // Kreiraj kopiju niza droppedElementGroup radi promene redosleda
       const updatedGroups = [...droppedElementGroup];
-      // Zamena elemenata u nizu
-      [updatedGroups[draggedGroupIndex], updatedGroups[droppedGroupIndex]] = [updatedGroups[droppedGroupIndex], updatedGroups[draggedGroupIndex]];
-      
-      // Ažuriraj state sa novim nizom grupa
+
+      [updatedGroups[draggedGroupIndex], updatedGroups[droppedGroupIndex]] = [
+        updatedGroups[droppedGroupIndex],
+        updatedGroups[draggedGroupIndex],
+      ];
+
       setDroppedElementGroup(updatedGroups);
     }
-    setIsGroupClicked(false); 
-    }
-  
+    setIsGroupClicked(false);
+  };
+
   return (
     <div
       className={styles.room}

@@ -15,7 +15,6 @@ const Home = () => {
   const [droppedGroupsInTables, setDroppedGroupsInTables] = useState({});
   const [isGroupClicked, setIsGroupClicked] = useState(false);
 
-  const [groups, setGroups] = useState([]);
   const handleDragOver = (e) => {
     e.preventDefault();
     console.log("test drag over");
@@ -32,7 +31,7 @@ const Home = () => {
 
   const handleDrop = (e) => {
     e.preventDefault();
-    console.log("droppam tablu")
+    console.log("droppam tablu");
     if (!isGroupClicked) {
       const elementId = e.dataTransfer.getData("TableID");
 
@@ -73,19 +72,17 @@ const Home = () => {
 
   const handleDeleteGroup = (groupId) => {
     console.log("Deleting group with ID:", groupId);
-    
+
     const updatedDroppedElementGroup = droppedElementGroup.filter(
       (group) => group.id !== groupId
     );
-    console.log(updatedDroppedElementGroup, "updatedDroppedElementGroup")
+    console.log(updatedDroppedElementGroup, "updatedDroppedElementGroup");
     const updateddroppedGroupsInTables = droppedElementTable.filter(
       (group) => group.id !== groupId
     );
     setDroppedElementGroup(updatedDroppedElementGroup);
-    setDroppedGroupsInTables(updateddroppedGroupsInTables)
+    setDroppedGroupsInTables(updateddroppedGroupsInTables);
   };
-
-
 
   const handleTableDropTable = (event, id) => {
     event.preventDefault();
@@ -95,16 +92,16 @@ const Home = () => {
       (group) => group.groupName === groupName
     );
     if (!droppedGroup || droppedGroupsInTables[groupName]) return;
-      console.log("nece")
-      console.log(id)
+    console.log("nece");
+    console.log(id);
     const postoji = droppedElementGroup.findIndex(
       (group) => group.groupName == groupName
     );
-    console.log("postoji li", droppedElementGroup)
-    console.log("postoji li", postoji)
+    console.log("postoji li", droppedElementGroup);
+    console.log("postoji li", postoji);
 
-    if (postoji != -1) return
-    console.log("postoji li", postoji)
+    if (postoji != -1) return;
+    console.log("postoji li", postoji);
 
     let updatedDroppedElementGroup = [...droppedElementGroup];
     let updatedDroppedElementTable = [...droppedElementTable];
@@ -119,7 +116,7 @@ const Home = () => {
       .filter((group) => group.targetedTable === id)
       .reduce((total, group) => total + group.groupSize, 0);
 
-    // Proveravamo da li nova grupa može stati u sto uzimajući u obzir preostali kapacitet stola nakon dodavanja prethodnih grupa
+    
     console.log(tableCapacity, totalGroupSize);
     if (droppedGroup.groupSize <= tableCapacity - totalGroupSize + 1) {
       updatedDroppedElementGroup = [

@@ -23,13 +23,11 @@
 }
 
 .draggedGroupItem {
-
   background-color: #f0f0f0;
   border-radius: 5px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: row;
-
 }
 
 .addButton {
@@ -45,7 +43,6 @@
 .addButton:hover {
   background-color: #0056b3;
 }
-
 
 .wrap {
   width: 80%;
