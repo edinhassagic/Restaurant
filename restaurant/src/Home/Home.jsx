@@ -32,6 +32,7 @@ const Home = () => {
 
   const handleDrop = (e) => {
     e.preventDefault();
+    console.log("droppam tablu")
     if (!isGroupClicked) {
       const elementId = e.dataTransfer.getData("TableID");
 
@@ -83,18 +84,26 @@ const Home = () => {
     setDroppedElementGroup(updatedDroppedElementGroup);
     setDroppedGroupsInTables(updateddroppedGroupsInTables)
   };
+
+
+
   const handleTableDropTable = (event, id) => {
     event.preventDefault();
+
     const groupName = event.dataTransfer.getData("groupName");
     const droppedGroup = groupData.find(
       (group) => group.groupName === groupName
     );
-    console.log(droppedGroup);
     if (!droppedGroup || droppedGroupsInTables[groupName]) return;
+      console.log("nece")
+      console.log(id)
     const postoji = droppedElementGroup.findIndex(
-      (group) => group.targetedTable === id
+      (group) => group.groupName == groupName
     );
-    if (postoji == -1) return
+    console.log("postoji li", droppedElementGroup)
+    console.log("postoji li", postoji)
+
+    if (postoji != -1) return
     console.log("postoji li", postoji)
 
     let updatedDroppedElementGroup = [...droppedElementGroup];
